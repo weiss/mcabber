@@ -2126,10 +2126,10 @@ static void room_names(gpointer bud, char *arg)
     }
     g_free(p_res->data);
   }
-  
+
   snprintf(buffer, 4095, "Total: %d", cnt);
   scr_WriteIncomingMessage(bjid, buffer, 0, HBB_PREFIX_INFO, 0);
-  
+
   g_slist_free(resources);
   g_free(buffer);
 }
@@ -2937,7 +2937,7 @@ static void room_topic(gpointer bud, char *arg)
     arg = NULL;
 
   arg = to_utf8(arg);
-  // if arg is not NULL & option is set, unescape it 
+  // If arg is not NULL & option is set, unescape it
   if (arg) {
     char *unescaped_topic = NULL;
 
@@ -2948,7 +2948,7 @@ static void room_topic(gpointer bud, char *arg)
       arg = tmp;
       unescaped_topic = ut_unescape_tabs_cr(arg);
     }
-    
+
     // We must not free() if the original string was returned
     if (unescaped_topic == arg)
       unescaped_topic = NULL;
