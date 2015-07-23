@@ -102,6 +102,7 @@ void scr_process_key(keycode kcode);
 
 void scr_init_bindings(void);
 void scr_init_locale_charset(void);
+void scr_init_day_change_timeout(void);
 void scr_init_curses(void);
 void scr_init_settings(void);
 void scr_terminate_curses(void);

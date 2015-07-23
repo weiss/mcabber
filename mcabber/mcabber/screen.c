@@ -2517,6 +2517,58 @@ void scr_check_auto_away(int activity)
     scr_reinstall_autoaway_timeout();
 }
 
+static void scr_report_day_change(gpointer rosterdata, void *data)
+{
+  char message[32];
+  const char *jid = buddy_getjid(rosterdata);
+  time_t timestamp = time(NULL);
+
+  if (jid) {
+    strftime(message, sizeof(message), "Day changed to %Y-%m-%d",
+             localtime(&timestamp));
+    scr_write_in_window(jid, message, timestamp,
+                        HBB_PREFIX_INFO | HBB_PREFIX_NOFLAG, FALSE, 0, NULL);
+  }
+}
+
+static gboolean scr_day_change_timeout_callback(gpointer data)
+{
+  guint roster_type;
+  gboolean write_stamp;
+
+  switch (settings_opt_get_int("report_day_change")) {
+    case 1:
+        write_stamp = TRUE;
+        roster_type = ROSTER_TYPE_USER | ROSTER_TYPE_ROOM;
+        break;
+    case 2:
+        write_stamp = TRUE;
+        roster_type = ROSTER_TYPE_USER;
+        break;
+    case 3:
+        write_stamp = TRUE;
+        roster_type = ROSTER_TYPE_ROOM;
+        break;
+    default:
+        write_stamp = FALSE;
+  }
+  if (write_stamp)
+    foreach_buddy(roster_type, scr_report_day_change, NULL);
+  scr_init_day_change_timeout();
+  return FALSE;
+}
+
+void scr_init_day_change_timeout(void)
+{
+  time_t now = time(NULL);
+  struct tm midnight = *localtime(&now);
+
+  midnight.tm_mday++;
+  midnight.tm_hour = midnight.tm_min = midnight.tm_sec = 0;
+  g_timeout_add_seconds(mktime(&midnight) - now, scr_day_change_timeout_callback,
+                        NULL);
+}
+
 //  set_current_buddy(newbuddy)
 // Set the current_buddy to newbuddy (if not NULL)
 // Lock the newbuddy, and unlock the previous current_buddy

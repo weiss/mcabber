@@ -442,6 +442,7 @@ int main(int argc, char **argv)
 #endif
   /* Initialize charset */
   scr_init_locale_charset();
+  scr_init_day_change_timeout();
   ut_init_debug();
   help_init();
 

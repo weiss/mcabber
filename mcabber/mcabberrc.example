@@ -512,6 +512,13 @@ set escdelay = 50
 # - 2: None
 #set time_prefix = 0
 #
+# Write day change stamp:
+# - 0: (default) Don't write day change stamps
+# - 1: Write day change stamps to all chat buffers
+# - 2: Write day change stamps to user chat buffers
+# - 3: Write day change stamps to MUC room buffers
+#set report_day_change = 0
+#
 # When a contact sends "/me ", mcabber displays "*user ", where user
 # is the local part of the contact's JID.
 # If you want mcabber to display the complete bare JID (user@server.com),
