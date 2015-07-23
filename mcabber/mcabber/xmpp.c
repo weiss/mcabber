@@ -1137,7 +1137,7 @@ static LmHandlerResult handle_messages(LmMessageHandler *handler,
       bjid = jidtodisp(to);
 
       if (body && *body)
-        hk_message_out(bjid, NULL, timestamp, body, 0, NULL);
+        hk_message_out(bjid, NULL, timestamp, body, 0, TRUE, NULL);
 
       scr_LogPrint(LPRINT_DEBUG, "Received outgoing carbon for <%s>", to);
       goto handle_messages_return;
