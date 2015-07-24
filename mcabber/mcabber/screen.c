@@ -3757,8 +3757,10 @@ void readline_disable_chat_mode(guint show_roster)
     scr_buffer_readmark(TRUE);
   currentWindow = NULL;
   chatmode = FALSE;
-  if (current_buddy)
+  if (current_buddy) {
     buddy_setflags(BUDDATA(current_buddy), ROSTER_FLAG_LOCK, FALSE);
+    alternate_buddy = current_buddy;
+  }
   if (show_roster)
     scr_roster_visibility(1);
   scr_update_chat_status(FALSE);
